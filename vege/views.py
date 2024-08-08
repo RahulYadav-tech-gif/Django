@@ -7,7 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 
 @login_required(login_url="/login/")
@@ -36,8 +38,8 @@ def receipes(request):
     return render(request, 'receipes.html', context)
 
 @login_required(login_url="/login/")
-def update_receipe(request, id):
-    queryset = Receipe.objects.get(id = id)
+def update_receipe(request, slug):
+    queryset = Receipe.objects.get(slug = slug)
     if request.method == 'POST':
         data = request.POST
         receipe_image = request.FILES.get('receipe_image')
